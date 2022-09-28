@@ -1,0 +1,5 @@
+build/particles.js
+build/particles.wasm
+node_modules/*
+package-lock.json
+package.json
