@@ -1,5 +1,4 @@
 # wawesome :zap:
-Script for compiling cpp files to wasm along with recompilation on modification.
 Episode 2 of a number of experiments I have been doing to figure out the ease of coding and benefits of using an emscripten to compile C++ to Wasm.
 
 ---
