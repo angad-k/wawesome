@@ -11,8 +11,13 @@ const setupConstants = () => {
     exportedruntimefuncs = ['cwrap', 'getValue', 'setValue']
 }
 
+const executeCommand = (command) => {
+    console.log("exec", command);
+    exec(command);
+}
+
 const setup = () => {
-    exec("npm install chokidar");
+    executeCommand("npm install chokidar");
 }
 
 const start = () => {
@@ -22,7 +27,7 @@ const start = () => {
 
     // One-liner for current directory
     chokidar.watch(wasmdir).on('all', (event, path) => {
-        console.log(event, path);
+        // console.log(event, path);
         if(event=='change')
         {
             console.log("WASM source files modified, recompiling...")
@@ -32,7 +37,7 @@ const start = () => {
 }
 
 const startServer = ()=> {
-    exec("python -m http.server 8080")
+    executeCommand("python -m http.server 8080")
 }
 
 const compileWasm = () => {
@@ -66,9 +71,8 @@ const compileWasm = () => {
     if (!fs.existsSync(outputdir)){
         fs.mkdirSync(outputdir);
     }
-
-    console.log("exec :", command)
-    exec(command, (err, stdout, stderr) => {
+    
+    executeCommand(command, (err, stdout, stderr) => {
         if (err) {
             console.error(`${err}`);
             return;
