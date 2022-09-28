@@ -1,0 +1,12 @@
+{
+    "exports" : {
+        "funcs" : ["initialize_particle_system", "update_particle_system", "malloc", "main"],
+        "runtimefuncs" : ["cwrap", "getValue", "setValue"]
+    },
+    "directories" :{
+        "wasmdir" : "./src",
+        "outputdir" : "./build"
+    },
+    "inputfile" : "particles.cpp",
+    "outputfile" : "particles.js"
+}

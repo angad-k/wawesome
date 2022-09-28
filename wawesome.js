@@ -3,12 +3,23 @@ const fs = require('fs');
 let wasmdir, outputdir, inputfile, outputfile, exportedfuncs;
 
 const setupConstants = () => {
-    wasmdir = './src';
-    outputdir = './build';
-    inputfile = 'particles.cpp';
-    outputfile = 'particles.js';
-    exportedfuncs = ['initialize_particle_system', 'update_particle_system', 'malloc', 'main']
-    exportedruntimefuncs = ['cwrap', 'getValue', 'setValue']
+    let wawesomeconsts = readJSON();
+    wasmdir = wawesomeconsts?.directories?.wasmdir || './src';
+    outputdir = wawesomeconsts?.directories?.outputdir || './build';
+    inputfile = wawesomeconsts?.inputfile || 'hello.cpp';
+    outputfile = wawesomeconsts?.outputfile || 'hello.js';
+    exportedfuncs = wawesomeconsts?.exports?.funcs || [];
+    exportedruntimefuncs = wawesomeconsts?.exports?.runtimefuncs || [];
+    // console.log(outputdir, wasmdir, inputfile, outputfile, exportedfuncs, exportedruntimefuncs);
+}
+
+const readJSON = () => {
+    if (!fs.existsSync('wawesome.json')){
+        return
+    }
+    let rawdata = fs.readFileSync('wawesome.json');
+    let jsonfile = JSON.parse(rawdata);
+    return jsonfile;
 }
 
 const executeCommand = (command) => {
@@ -71,7 +82,7 @@ const compileWasm = () => {
     if (!fs.existsSync(outputdir)){
         fs.mkdirSync(outputdir);
     }
-    
+
     executeCommand(command, (err, stdout, stderr) => {
         if (err) {
             console.error(`${err}`);
